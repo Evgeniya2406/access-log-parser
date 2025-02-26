@@ -15,7 +15,7 @@ public class ЦиклыКурсовойПроект {
         int количествоСуществующихФайлов=0;
 
         while (true) {
-            System.out.println("Введите полный путь к файлу: ");
+            System.out.println("Введите полный путь к файлу:  ");
             путь= sc.nextLine();
             file = new File(путь);
             файлСуществует=file.isFile();
