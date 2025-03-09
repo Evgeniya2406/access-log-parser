@@ -13,13 +13,11 @@ public Point end;
 
     @Override
     public String toString() {
-        return "Линия от " +  start.toString() + " до "
-                 + end.toString();
+        return "Линия от " +  start + " до "
+                 + end;
     }
         public Double getLength() {
-            double sqrt;
-            sqrt = Math.sqrt(Math.pow((this.start.x - this.end.x), 2) + Math.pow((this.start.y - this.end.y), 2));
-        return sqrt;
+            return Math.sqrt(Math.pow((this.start.getX() - this.end.getX()), 2) + Math.pow((this.start.getY() - this.end.getY()), 2));
     }
     }
 

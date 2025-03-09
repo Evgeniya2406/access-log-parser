@@ -7,14 +7,11 @@ public class Start {
         Line ln1= new Line(tck1,tck2);
         Line ln2= new Line(tck3,tck4);
         Line ln3= new Line(tck2,tck3);
-        System.out.println(ln3.toString());
+        System.out.println(ln3);
         System.out.println("Меняем координаты начала и конца линии 3");
-        tck2=new Point(5,10);
-        tck3=new Point(16,19);
-        ln1= new Line(tck1,tck2);
-        ln2= new Line(tck3,tck4);
-        ln3 = new Line(tck2,tck3);
-        System.out.println(ln3.toString());
+        tck2.setX(7);
+        tck3.setX(16);
+        System.out.println(ln3);
         System.out.println(ln1.getLength()+ln2.getLength()+ln3.getLength());
     }
 }
