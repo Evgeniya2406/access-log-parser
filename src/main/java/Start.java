@@ -1,18 +1,25 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Start {
     public static void main(String[] args) {
-        System.out.println("Задание 1: Создание экземпляров дробей: ");
-        Fraction f1 = new Fraction(1,3);
-        Fraction f2 = new Fraction(2,5);
-        Fraction f3 = new Fraction(7,8);
+        List<Integer> grades= new ArrayList<>();
+        grades.add(2);
+        grades.add(3);
+        grades.add(4);
+        grades.add(5);
 
-        System.out.println(f1);
-        System.out.println(f2);
+        String name = "Sherbakov";
+        Student std = new Student(name, grades);
+        System.out.println(std);
 
-        System.out.println("Задание 2: Посчитать f1.sum(f2).sum(f3).minus(5), где f1 это одна треть, f2 две пятых, а f3 это семь восьмых: ");
-        Fraction result1 = new Fraction( f1.add(f2).add(f3).substract(5));
-        System.out.println(result1);
-        System.out.println("Проверка: ");
-        Fraction result2 = new Fraction(result1.substract(f2).substract(f3).add(5));
-        System.out.println(result2);
+        List<Integer> newGrades= new ArrayList<>();
+        newGrades.add(2);
+        newGrades.add(4);
+        newGrades.add(3);
+        newGrades.add(5);
+        std.addGrades(newGrades);
+        System.out.println(std);
+        System.out.println(std.getGrades());
     }
 }
