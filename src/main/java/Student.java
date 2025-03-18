@@ -17,7 +17,7 @@ public class Student {
     }
 
     public List<Integer> getGrades() {
-        return grades;
+        return new ArrayList<>(grades);
     }
 
     @Override
