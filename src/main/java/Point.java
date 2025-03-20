@@ -1,6 +1,6 @@
 public class Point {
-   private int x;
-   private int y;
+    int x;
+    int y;
 
     public Point(){
         this.x=0;
@@ -30,4 +30,6 @@ public class Point {
     public String toString() {
        return "{%d;%d}".formatted(x,y);
     }
+
+
 }

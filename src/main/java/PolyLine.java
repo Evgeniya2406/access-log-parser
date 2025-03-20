@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class PolyLine {
+public class PolyLine implements Measurable{
     private Point[] coordinates;
 
 
@@ -11,6 +11,7 @@ public class PolyLine {
     public void setCoordinates(Point[] coordinate) {
         this.coordinates = coordinate;
     }
+
     public int countLines(){
         return coordinates.length-1;
     }
@@ -18,7 +19,7 @@ public class PolyLine {
 
     @Override
     public String toString() {
-        return "Линия " +
+        return "Ломаная Линия " +
                 Arrays.toString(coordinates);
     }
 
@@ -35,6 +36,6 @@ public class PolyLine {
         for (int i = 0; i< coordinates.length-1; i++) {
              length += new Line(coordinates[i], coordinates[i + 1]).getLength();
         }
-        return length;
+        return Math.round(length*1000)/1000.0;
     }
 }

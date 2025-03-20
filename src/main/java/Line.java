@@ -1,4 +1,4 @@
-public class Line {
+public class Line implements Measurable {
 public Point start;
 public Point end;
 
@@ -21,7 +21,8 @@ public Point end;
                  + end;
     }
         public Double getLength() {
-            return Math.sqrt(Math.pow((this.start.getX() - this.end.getX()), 2) + Math.pow((this.start.getY() - this.end.getY()), 2));
+            return Math.round(Math.sqrt(Math.pow((this.start.getX() - this.end.getX()), 2) + Math.pow((this.start.getY() - this.end.getY()), 2))*1000)/1000.0;
+
     }
     }
 
