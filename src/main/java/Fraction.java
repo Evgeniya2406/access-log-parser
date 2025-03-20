@@ -1,10 +1,30 @@
-public final class Fraction {
+public final class Fraction extends Number {
     private int numerator;
     private int denominator;
 
     public Fraction(){
         this.numerator=0;
         this.denominator=1;
+    }
+
+    @Override
+    public int intValue() {
+        return numerator/denominator;
+    }
+
+    @Override
+    public long longValue() {
+        return numerator/denominator;
+    }
+
+    @Override
+    public float floatValue() {
+        return ((float)(numerator)/(float)denominator);
+    }
+
+    @Override
+    public double doubleValue() {
+        return ((float)(numerator)/(float)denominator);
     }
 
     public Fraction(int x){
