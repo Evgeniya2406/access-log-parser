@@ -1,25 +1,13 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class Start {
     public static void main(String[] args) {
-        List<Integer> grades= new ArrayList<>();
-        grades.add(2);
-        grades.add(3);
-        grades.add(4);
-        grades.add(5);
-
-        String name = "Sherbakov";
-        Student std = new Student(name, grades);
-        System.out.println(std);
-
-        List<Integer> newGrades= new ArrayList<>();
-        newGrades.add(2);
-        newGrades.add(4);
-        newGrades.add(3);
-        newGrades.add(5);
-        std.addGrades(newGrades);
-        System.out.println(std);
-        System.out.println(std.getGrades());
+    length(new Line(2,3,1,2));
+    PolyLine polyLine = new PolyLine();
+    polyLine.setCoordinates(new Point[]{new Point(2,3),new Point(1,2), new Point(4,5)});
+    length(polyLine);
+    }
+    static void length(Measurable m){
+        System.out.println(m.toString());
+       // System.out.println("Длина равна %d".formatted(m.getLength()));
+        System.out.println(m.getLength());
     }
 }
