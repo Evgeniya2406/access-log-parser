@@ -1,6 +1,13 @@
 import java.io.*;
 import java.util.Scanner;
 
+class AccessLogException extends Exception{
+    public AccessLogException(String msg){
+        super(msg);
+    }
+
+}
+
 public class Start {
     public static void main(String[] args) throws IOException {
         try {
@@ -9,7 +16,7 @@ public class Start {
             ex.printStackTrace();
         }
     }
-        public static void courseProject() throws IOException, RuntimeException {
+        public static void courseProject() throws IOException, AccessLogException {
             boolean файлСуществует = false;
             boolean папкаСуществует = false;
             Scanner sc = new Scanner(System.in);
@@ -45,7 +52,7 @@ public class Start {
                     int length = line.length();
                     if (length>max) max=length;
                     if (length<min) min=length;
-                    if (max>=1024) throw new RuntimeException("строка равна или длиннее 1024 символов");
+                    if (max>=1024) throw new AccessLogException("строка равна или длиннее 1024 символов");
                 }
                 System.out.println("Общее количество строк: " + count);
                 System.out.println("Длина самой длинной строки: " + max);
