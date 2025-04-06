@@ -1,6 +1,7 @@
 import java.io.*;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 class AccessLogException extends Exception{
@@ -72,6 +73,16 @@ public class Start {
             System.out.println("Объём трафика сайта за час " + statistics.getTrafficRate()/1024/1024+ " мегабайт(a)");
             System.out.println("Продолжительность лога " + (Duration.between(statistics.getMinTime(),statistics.getMaxTime()).toHoursPart()+ (int) Duration.between(statistics.getMinTime(),statistics.getMaxTime()).toDaysPart()*24)+" часа(ов)");
             System.out.println("Объем общего трафика за период составил "+ statistics.getTotalTraffic()+ " байт(а)");
+
+            HashMap<String, Double> sttc = statistics.getOSStatistics();
+            System.out.println(sttc);
+
+
+                Double sum=0.0;
+                for (Double value : sttc.values()) {
+                    sum+=value;
+                }
+            System.out.println("Сумма всех долей=" + sum);
         }
     }
 

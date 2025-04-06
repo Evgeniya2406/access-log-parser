@@ -132,8 +132,6 @@ private LocalDateTime convert(String s){
             Integer.parseInt(tmpS[2].split(":")[1]),
             Integer.parseInt(tmpS[2].split(":")[2]));
            //Integer.parseInt(tmpS[2].split(":")[3]);
-
-
         return localDateTime;
 }
 
