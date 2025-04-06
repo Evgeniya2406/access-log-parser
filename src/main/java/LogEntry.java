@@ -61,6 +61,9 @@ public class LogEntry {
          start = str1.indexOf("\"")+2;
           str1=str1.substring(start,str1.length()-1);
         this.codeResponce = Integer.parseInt(str1.substring(0,str1.indexOf(" ")));
+       // if(codeResponce!=200 && codeResponce!=404) System.out.println(str);
+       // if (str.contains("404") && codeResponce!=404) System.out.println(str);
+
 
         start = str1.indexOf(" ")+1;
         str1=str1.substring(start,str1.length()-1);
@@ -73,7 +76,7 @@ public class LogEntry {
             this.referer="null";
         }
 
-        System.out.println(this.ipAddress+ " " + this.queryDate+ " " +this.queryMethod+ " " +this.queryPath+ " " +this.codeResponce+ " " +this.dataSize+ " " +this.referer + " " +this.userAgent);
+      //  System.out.println(this.ipAddress+ " " + this.queryDate+ " " +this.queryMethod+ " " +this.queryPath+ " " +this.codeResponce+ " " +this.dataSize+ " " +this.referer + " " +this.userAgent);
 
     }
 

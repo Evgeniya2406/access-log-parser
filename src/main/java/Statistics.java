@@ -10,7 +10,9 @@ private LocalDateTime minTime;
 private LocalDateTime maxTime;
 
 private HashSet<String> pages = new HashSet<String>();
+private HashSet<String> noPages = new HashSet<String>();
 private HashMap<OperationSystem, Integer> OSStatistics = new HashMap<OperationSystem, Integer>();
+private HashMap<Browser, Integer> browserStatistics = new HashMap<Browser, Integer>();
 
 
     public HashMap<String, Double> getOSStatistics() {
@@ -25,6 +27,18 @@ private HashMap<OperationSystem, Integer> OSStatistics = new HashMap<OperationSy
         return sttc;
     }
 
+    public HashMap<String, Double> getBrowserStatistics() {
+        HashMap<String, Double> sttc = new HashMap<String, Double>();
+        Double sum=0.0;
+        for (Integer value : browserStatistics.values()) {
+            sum=sum+ value;
+        }
+        for (Browser value : Browser.values()) {
+            sttc.put(value.toString(),browserStatistics.get(value)/sum);
+        }
+        return sttc;
+    }
+
     public Statistics() {
         this.averageTrafficsAtHour=0;
         this.totalTraffic=0;
@@ -34,11 +48,18 @@ private HashMap<OperationSystem, Integer> OSStatistics = new HashMap<OperationSy
         for (OperationSystem value : OperationSystem.values()) {
             OSStatistics.put(value,0);
         }
+        for (Browser value : Browser.values()) {
+           browserStatistics.put(value,0);
+        }
     }
 
 
     public HashSet<String> getPages() {
         return pages;
+    }
+
+    public HashSet<String> getNoPages() {
+        return noPages;
     }
 
     public long getTotalTraffic() {
@@ -60,8 +81,11 @@ private HashMap<OperationSystem, Integer> OSStatistics = new HashMap<OperationSy
         if (logEntry.queryDate.isBefore(minTime)) minTime=logEntry.queryDate;
 
         if(logEntry.codeResponce==200) pages.add(logEntry.queryPath);
+        if(logEntry.codeResponce==404) noPages.add(logEntry.queryPath);
 
         OSStatistics.put(logEntry.getUserAgent().getOperationSystem(),OSStatistics.get(logEntry.getUserAgent().getOperationSystem())+1);
+
+        browserStatistics.put(logEntry.getUserAgent().getBrowser(),browserStatistics.get(logEntry.getUserAgent().getBrowser())+1);
     }
 
     public long getTrafficRate(){

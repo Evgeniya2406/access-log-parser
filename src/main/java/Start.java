@@ -54,12 +54,14 @@ public class Start {
             Integer count = 1;
             Integer yandexBotCounter =0;
             Integer googleBotCounter =0;
+
             Statistics statistics = new Statistics();
+
             while ((line = reader.readLine()) != null) {
                 if (parseString(line).getLast().contains("YandexBot")) yandexBotCounter++;
                 if (parseString(line).getLast().contains("Googlebot")) googleBotCounter++;
                 count++;
-                System.out.println(count + "-я строка:");
+               // System.out.println(count + "-я строка:");
                 int length = line.length();
                 if (length >= 1024) throw new AccessLogException("строка равна или длиннее 1024 символов");
                 LogEntry logEntry = new LogEntry(line);
@@ -74,15 +76,26 @@ public class Start {
             System.out.println("Продолжительность лога " + (Duration.between(statistics.getMinTime(),statistics.getMaxTime()).toHoursPart()+ (int) Duration.between(statistics.getMinTime(),statistics.getMaxTime()).toDaysPart()*24)+" часа(ов)");
             System.out.println("Объем общего трафика за период составил "+ statistics.getTotalTraffic()+ " байт(а)");
 
+
             HashMap<String, Double> sttc = statistics.getOSStatistics();
             System.out.println(sttc);
-
-
                 Double sum=0.0;
                 for (Double value : sttc.values()) {
                     sum+=value;
                 }
             System.out.println("Сумма всех долей=" + sum);
+
+            HashMap<String, Double> sttc2 = statistics.getBrowserStatistics();
+            System.out.println(sttc2);
+            sum=0.0;
+            for (Double value : sttc2.values()) {
+                sum+=value;
+            }
+            System.out.println("Сумма всех долей=" + sum);
+
+            System.out.println(statistics.getPages().size());
+            System.out.println(statistics.getNoPages().size());
+            System.out.println(statistics.getBrowserStatistics());
         }
     }
 
