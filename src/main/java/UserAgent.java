@@ -19,12 +19,11 @@ enum OperationSystem{
 public class UserAgent {
     final Browser browser;
     final OperationSystem operationSystem;
+    private Boolean isBot;
 
 
-    public UserAgent(Browser browser, OperationSystem operationSystem) {
-        this.browser = browser;
-        this.operationSystem = operationSystem;
-
+    public Boolean getBot() {
+        return isBot;
     }
 
     public UserAgent(String str) {
@@ -64,7 +63,12 @@ public class UserAgent {
                 this.operationSystem = OperationSystem.MAC;
             } else this.operationSystem = OperationSystem.OTHER;
 
+            if (str1.contains("bot")) {
+                this.isBot=true;
+            }
+            else this.isBot=false;
         }
+
 
     public Browser getBrowser() {
         return browser;

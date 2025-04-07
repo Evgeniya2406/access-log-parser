@@ -48,10 +48,10 @@ public class Start {
                     new BufferedReader(fileReader);
 
             String line;
-            line = reader.readLine();
-            ArrayList <LogEntry> files = new ArrayList<>();
-            files.add(new LogEntry(line));
-            Integer count = 1;
+            //line = reader.readLine();
+            //ArrayList <LogEntry> files = new ArrayList<>();
+            //files.add(new LogEntry(line));
+           // Integer count = 0;
             Integer yandexBotCounter =0;
             Integer googleBotCounter =0;
 
@@ -60,21 +60,25 @@ public class Start {
             while ((line = reader.readLine()) != null) {
                 if (parseString(line).getLast().contains("YandexBot")) yandexBotCounter++;
                 if (parseString(line).getLast().contains("Googlebot")) googleBotCounter++;
-                count++;
+              //  count++;
                // System.out.println(count + "-я строка:");
                 int length = line.length();
                 if (length >= 1024) throw new AccessLogException("строка равна или длиннее 1024 символов");
                 LogEntry logEntry = new LogEntry(line);
-                files.add(logEntry);
+               // files.add(logEntry);
                 statistics.addEntry(logEntry);
             }
-            System.out.println("Доля запросов YandexBot: " + Math.round(yandexBotCounter*1.0/count*1000.0)/10.0);
-            System.out.println("Доля запросов Googlebot: " + Math.round(googleBotCounter*1.0/count*1000.0)/10.0);
-            System.out.println("Общее количество запросов: " + count);
+            System.out.println("Доля запросов YandexBot: " + Math.round(yandexBotCounter*1.0/statistics.getTotalVisits()*1000.0)/10.0);
+            System.out.println("Доля запросов Googlebot: " + Math.round(googleBotCounter*1.0/ statistics.getTotalVisits()*1000.0)/10.0);
+            System.out.println("Общее количество запросов: " + statistics.getTotalVisits());
             System.out.println("Период лога с " + statistics.getMinTime() + " до " + statistics.getMaxTime());
             System.out.println("Объём трафика сайта за час " + statistics.getTrafficRate()/1024/1024+ " мегабайт(a)");
             System.out.println("Продолжительность лога " + (Duration.between(statistics.getMinTime(),statistics.getMaxTime()).toHoursPart()+ (int) Duration.between(statistics.getMinTime(),statistics.getMaxTime()).toDaysPart()*24)+" часа(ов)");
             System.out.println("Объем общего трафика за период составил "+ statistics.getTotalTraffic()+ " байт(а)");
+            System.out.println("Количество посещений сайта не ботами: " + statistics.getUserVisits());
+            System.out.println("Среднее количество посещений сайта не ботами: " + statistics.getAverageVisitsAtHour());
+            System.out.println("Среднее количество ошибочных запросов в час: " + statistics.getErrorRequestAtHour());
+            System.out.println("Средняя посещаемость  одним пользователем: "+ statistics.getAverageUserTraffic());
 
 
             HashMap<String, Double> sttc = statistics.getOSStatistics();
@@ -92,10 +96,6 @@ public class Start {
                 sum+=value;
             }
             System.out.println("Сумма всех долей=" + sum);
-
-            System.out.println(statistics.getPages().size());
-            System.out.println(statistics.getNoPages().size());
-            System.out.println(statistics.getBrowserStatistics());
         }
     }
 
