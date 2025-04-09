@@ -2,8 +2,11 @@ import lombok.Getter;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.stream.Stream;
 
 
 public class Statistics {
@@ -22,6 +25,9 @@ private HashMap<OperationSystem, Integer> OSStatistics = new HashMap<OperationSy
 private HashMap<Browser, Integer> browserStatistics = new HashMap<Browser, Integer>();
 @Getter
 private HashSet<String> unicUsers = new HashSet<String>();
+private HashMap<Long, Integer> visitsAtSecond = new HashMap<>();
+private HashSet<String> domens = new HashSet<>();
+private HashMap<String, Integer> unicUserVisits = new HashMap<>();
 
 
 
@@ -47,6 +53,11 @@ private HashSet<String> unicUsers = new HashSet<String>();
             sttc.put(value.toString(),browserStatistics.get(value)/sum);
         }
         return sttc;
+    }
+
+    public int getVisitsAtSecond(Long countSecond) {
+       // ZoneOffset zone=ZoneOffset.of("Z");
+        return this.visitsAtSecond.get(countSecond);
     }
 
     public Statistics() {
@@ -92,11 +103,33 @@ private HashSet<String> unicUsers = new HashSet<String>();
     }
 
     public void addEntry(LogEntry logEntry){
-        totalVisits++; // visits=visits+1; visits+=1;
-        if (logEntry.getUserAgent().getBot()) {
+        totalVisits++;
+        //LocalDateTime localDateTime =  LocalDateTime.of(2022,9,25,6,25,10);
+       // if (logEntry.queryDate.compareTo(localDateTime)==0) { // visits=visits+1; visits+=1;
+        //  boolean b= true;
+       // }
+        if (logEntry.getReferer().contains("/")) {
+            domens.add(logEntry.getReferer());
+        }
+        if (!logEntry.getUserAgent().getBot()) {
             userVisits=userVisits+1;
             unicUsers.add(logEntry.ipAddress);
+
+            // Подсчет количества посещений за одну каждую секунду
+            Long std = getSecondDuration(logEntry.queryDate);
+            if (!visitsAtSecond.containsKey(std)){
+                visitsAtSecond.put(std,1);
+            } else {
+                visitsAtSecond.put(std, visitsAtSecond.get(std) + 1);
+            }
+            // Подсчет посещений каждым пользователем
+            if (!unicUserVisits.containsKey(logEntry.ipAddress)){
+                unicUserVisits.put(logEntry.ipAddress, 1);
+            } else {
+                unicUserVisits.put(logEntry.ipAddress, unicUserVisits.get(logEntry.ipAddress) + 1);
+            }
         }
+
         if (logEntry.codeResponce%100==4 || logEntry.codeResponce%100==5) errorRequests+=1;
 
         totalTraffic=totalTraffic+logEntry.dataSize;
@@ -112,6 +145,16 @@ private HashSet<String> unicUsers = new HashSet<String>();
 
         browserStatistics.put(logEntry.getUserAgent().getBrowser(),browserStatistics.get(logEntry.getUserAgent().getBrowser())+1);
     }
+
+
+    public long getSecondDuration(LocalDateTime t) {
+        long d = t.getDayOfYear();
+        long h = t.getHour();
+        long m = t.getMinute();
+        long s = t.getSecond();
+        return (d * 86400)+ (h * 3600) + (m * 60) + s;
+    }
+
 
     public long getTrafficRate(){
         int hours=(Duration.between(minTime,maxTime).toHoursPart()+ (int) Duration.between(minTime,maxTime).toDaysPart()*24);
@@ -134,4 +177,19 @@ private HashSet<String> unicUsers = new HashSet<String>();
         return i;
     }
 
+
+    public  HashSet<String> getDomens(String str) {
+        HashSet<String> siteList = new HashSet<>();
+       domens.forEach(value -> {
+           if (value.contains(str)) {
+               siteList.add(value);
+           }
+       });
+        return siteList;
+    }
+
+    public String getUnicUserMaxVisits() {
+        int max =  unicUserVisits.values().stream().max(Integer::compare).get();
+       return String.valueOf(unicUserVisits.entrySet().stream().filter(it -> it.getValue().equals(max)).findFirst());
+    }
 }

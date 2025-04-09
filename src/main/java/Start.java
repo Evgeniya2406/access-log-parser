@@ -1,8 +1,13 @@
 import java.io.*;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 class AccessLogException extends Exception{
     public AccessLogException(String msg){
@@ -79,8 +84,18 @@ public class Start {
             System.out.println("Среднее количество посещений сайта не ботами: " + statistics.getAverageVisitsAtHour());
             System.out.println("Среднее количество ошибочных запросов в час: " + statistics.getErrorRequestAtHour());
             System.out.println("Средняя посещаемость  одним пользователем: "+ statistics.getAverageUserTraffic());
+            LocalDateTime localDateTime =  LocalDateTime.of(2022,9,25,6,25,10);
+           //ZoneOffset zone=ZoneOffset.of();
+            System.out.println("Количество посещений за одну секунду: " + statistics.getVisitsAtSecond(statistics.getSecondDuration(localDateTime)));
+            System.out.println("Количество совпадений по полю referer для \"nova-news.ru\": " +statistics.getDomens("nova-news.ru").size());
+            Stream.of(statistics.getDomens("nova-news.ru").toArray()).limit(5).forEach(System.out::println);
+            System.out.println("Самый активный пользователь: " + statistics.getUnicUserMaxVisits());
+
+            // System.out.println("nova-news.ru"+ statistics.getDomens("nova-news.ru").toString());
 
 
+//"https://www.nova-news.ru//cooking/?rss=1&p=53&lg=1"
+            // [25/Sep/2022:06:25:06 +0300]
             HashMap<String, Double> sttc = statistics.getOSStatistics();
             System.out.println(sttc);
                 Double sum=0.0;

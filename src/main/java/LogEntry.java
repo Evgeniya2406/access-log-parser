@@ -109,7 +109,8 @@ public class LogEntry {
     }
 
 private LocalDateTime convert(String s){
-        String[] tmpS = s.split("/");
+        String[] tmp = s.split(" ");
+        String[] tmpS = tmp[0].split("/");
                 String month = tmpS[1];
         String numS = "";
         switch (month){
@@ -133,8 +134,8 @@ private LocalDateTime convert(String s){
             Integer.parseInt(numS),
             Integer.parseInt(tmpS[0]),
             Integer.parseInt(tmpS[2].split(":")[1]),
-            Integer.parseInt(tmpS[2].split(":")[2]));
-           //Integer.parseInt(tmpS[2].split(":")[3]);
+            Integer.parseInt(tmpS[2].split(":")[2]),
+           Integer.parseInt(tmpS[2].split(":")[3]));
         return localDateTime;
 }
 
